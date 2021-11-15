@@ -31,7 +31,7 @@ It also provides 6 built-in rules for arithmetics and I/O.
 	thus they can self-modify and in fact, only operate by self-modification.
 
 - Rule:
-	An runtime object. A list of tokens can 'match' a certain rule and if so, it
+	A runtime object. A list of tokens can 'match' a certain rule and if so, it
 	can produce a replacement list.
 
 - Rule's left-most match:
