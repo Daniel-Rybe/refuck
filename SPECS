@@ -10,7 +10,7 @@ by Daniel_Rybe
 Refuck is an esolang made by u/Daniel_Rybe.
 It's a spiritual successor to Markov's algorithms, using a similar string rewriting system.
 Unlike Markov's algorithms, it combines program code and input data, allowing for self-modification.
-It also provides 6 built-in functions for arithmetics and I/O.
+It also provides 6 built-in rules for arithmetics and I/O.
 
 
 
