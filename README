@@ -1,0 +1,6 @@
+this is a python interpreter for refuck esolang.
+to use it in a terminal:
+- $ python3 refuck.py --help
+
+
+SPECS file contains language description and specifications

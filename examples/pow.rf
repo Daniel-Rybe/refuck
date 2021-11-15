@@ -1,0 +1,6 @@
+#exponentiation operator
+
+: A 0 ** > 1 ;
+: A B ** > A B 1 - ** A * ;
+
+a:? b:? ** a^b:!

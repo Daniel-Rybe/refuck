@@ -1,0 +1,9 @@
+#fast version of fibonacci numbers using a for loop.
+
+: 1 f > 0 ;
+: 2 f > 1 ;
+: A f > A 3 - 1 1 0 ff ;
+: 0 B C D ff > B ;
+: A B C D ff > A 1 - B C + B C ff ;
+
+n:? f fib(n):!

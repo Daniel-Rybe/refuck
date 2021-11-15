@@ -1,0 +1,10 @@
+#recursive fibonacci with cache
+
+: : A f > B ; C D ^ > : A f > B ; : C f > D ; ;
+: ^^ A B C ++ > A B C + ^ B C + ;
+: A B C ^ > B C ^ A ;
+: 1 f > 0 ;
+: 2 f > 1 ;
+: A f > ^^ A A 1 - f A 2 - f ++ ;
+
+n:? f fib(n):!

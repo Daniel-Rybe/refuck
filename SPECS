@@ -1,0 +1,175 @@
+Refuck v1.0 specs
+by Daniel_Rybe
+
+
+#####################################
+############ DESCRIPTION ############
+#####################################
+
+
+Refuck is an esolang made by u/Daniel_Rybe.
+It's a spiritual successor to Markov's algorithms, using a similar string rewriting system.
+Unlike Markov's algorithms, it combines program code and input data, allowing for self-modification.
+It also provides 6 built-in functions for arithmetics and I/O.
+
+
+
+#####################################
+############ TERMINOLOGY ############ 
+#####################################
+
+- Token: 
+	Sequence of any non-whitespace characters.
+
+- Numeric Token:
+	Token that only consists of digits and, optionally, one dot.
+
+- Program:
+	List of tokens separated by whitespace characters.
+
+	Programs in refuck don't differentiate between code and data,
+	thus they can self-modify and in fact, only operate by self-modification.
+
+- Rule:
+	An runtime object. A list of tokens can 'match' a certain rule and if so, it
+	can produce a replacement list.
+
+- Rule's left-most match:
+	One of the sublists of a program, that matches a certain rule.
+	Specifically, the one with the smallest starting index. 
+
+- Executing a rule:
+	The process of replacing a rules left-most match in a program with a replacement list that the rule provides.
+
+
+#####################################
+########### PROGRAM FLOW ############
+#####################################
+
+
+The execution of a program is broken into steps.
+
+One step consists of the following sub-steps:
+
+	- Initialize the rule list with built-in rules. (More in the next sections)
+
+	- Start going through the program from the start, one token at a time.
+
+	- If you encounter a 'rule declaration', (More in the next sections)
+	  generate a new rule and append it to the end of the rule list.
+
+	- From all the rules with left-most matches starting at the current token,
+	  pick one with the shortest match and execute it.
+	  If there are multiple rules with matches of the same length, pick one that was first added to the rule list.
+
+	- If no rules had any matches, and so no rules were executed, the program finishes.
+
+
+########################################
+############ BUILT-IN RULES ############
+########################################
+
+
+Refuck provides 6 built-in rules in total: 4 arithmetic rules and 2 I/O rules.
+Arithmetic rules in Refuck use reverse Polish notation.
+
+- addition rule:
+
+	matches: [ N1, N2, '+' ]
+		where N1 and N2 are any numeric tokens.
+
+	replaces with: [ N1 + N2 ]
+		sum of two tokens expresed as numbers.
+
+	side effects: none
+
+- subtraction rule:
+
+	matches: [ N1, N2, '-' ]
+		where N1 and N2 are any numeric tokens.
+
+	replaces with: [ N1 - N2 ]
+		difference of two tokens expresed as numbers.
+
+	side effects: none
+
+- multiplication rule:
+
+	matches: [ N1, N2, '*' ]
+		where N1 and N2 are any numeric tokens.
+
+	replaces with: [ N1 * N2 ]
+		product of two tokens expresed as numbers.
+
+	side effects: none
+
+- division rule:
+
+	matches: [ N1, N2, '/' ]
+		where N1 and N2 are any numeric tokens.
+
+	replaces with: [ N1 / N2 ]
+		ratio of two tokens expresed as numbers.
+
+	side effects: none
+
+#Note: refuck doesn't have a separate expression parser, arithmetic rules behave like all other rules.
+
+- input rule:
+
+	matches: [ INPUT_REQUEST ]
+		where INPUT_REQUEST is any token that ends with '?' including '?' itself.
+
+	replaces with: [ USER_INPUT ]
+
+	side effects:
+		pauses the program and prompts the user for input, then stores it in USER_INPUT.
+		The prompt should display information about the INPUT_REQUEST token.
+		This is used to hint to users what they are inputing.
+
+- output rule:
+
+	matches: [ OUTPUT, OUTPUT_REQUEST ]
+		where OUTPUT is any token, OUTPUT_REQUEST is any token that ends with '!' including '!' itself.
+
+	replaces with: [ OUTPUT ]
+		practically deletes the OUTPUT_REQUEST token.
+
+	side effects:
+		prints the OUTPUT token to the console.
+		The printed string should contain information about the OUTPUT_REQUEST token.
+		This is used to hint to users what output they are seing.
+
+
+#################################################
+############ RULE DECLARATION SYNTAX ############
+#################################################
+
+
+The syntax is used to declare new rules as the current program step progresses.
+
+Rule declaration starts with a ':' token.
+Followed by a list of tokens, specifying the rule's match behavior.
+Followed by a '>' token
+Followed by a list of tokens, specifying the rule's replace behavior.
+Rule declaraion ends with a ';' token.
+
+Tokens that only consist of uppercase letters and, optionally, digits, act as variables in rule declaration.
+
+Examples of valid rules:
+
+	: a > b ; #turns all 'a' tokens into 'b' tokens.
+
+	: a b > c d ; #turns all pairs of subsequent 'a' and 'b' tokens into 'c' and 'd' tokens.
+
+	: A > b ; #turns all tokens to 'b' tokens. A acts as a variable
+
+	: A b > b A ; #swaps the places of any token with a subsequent 'b' token.
+
+
+############ MISC ############
+
+You can use '#' to make single-line comments.
+
+rule declaration syntax is a part of the program, and thus can be influenced by prior rules.
+

@@ -1,0 +1,27 @@
+#variables demo
+
+: : A > B ; A C = > : A > C ; ;
+: : A > B ; A ^ > ;
+: var A B = > var : A > B ; ;
+: var A ^ > var ;
+: A B C = > B C = A ;
+: A B ^ > B ^ A ;
+var
+
+set_n=1,_m=2 !
+
+n 1 =
+m 2 =
+n n:! m m:!
+
+
+set_n=3,_m=4 !
+
+n 3 =
+m 4 =
+n n:! m m:!
+
+delete_n_and_m !
+
+n ^ m ^
+n n:! m m:!
